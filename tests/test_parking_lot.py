@@ -6,6 +6,8 @@ from src.vehicle import Vehicle
 import datetime
 
 class TestParkingLot(unittest.TestCase):
+    """Test cases for the ParkingLot class."""
+
     def setUp(self):
         """Set up a parking lot and some sample vehicles before each test."""
         self.lot = ParkingLot(capacity=2)
@@ -92,7 +94,7 @@ class TestParkingLot(unittest.TestCase):
         self.lot.park_vehicle(v_mid)
 
         # Before sort
-        vehicles = self.lot._vehicles.get_all()
+        vehicles = self.lot.get_parked_vehicles()
         self.assertEqual(vehicles[0].get_license_plate(), "LATE")
         self.assertEqual(vehicles[1].get_license_plate(), "EARLY")
         self.assertEqual(vehicles[2].get_license_plate(), "MID")
@@ -101,7 +103,7 @@ class TestParkingLot(unittest.TestCase):
         self.lot.sort_by_entry_time()
 
         # After sort
-        vehicles = self.lot._vehicles.get_all()
+        vehicles = self.lot.get_parked_vehicles()
         self.assertEqual(vehicles[0].get_license_plate(), "EARLY")
         self.assertEqual(vehicles[1].get_license_plate(), "MID")
         self.assertEqual(vehicles[2].get_license_plate(), "LATE")
