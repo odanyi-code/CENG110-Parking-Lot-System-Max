@@ -1,0 +1,25 @@
+Algorithmic Analysis
+====================
+
+This document provides the Big-O time complexity analysis for the core operations of the ParkingLotManagementSystem.
+
+1. Add (park_vehicle): O(N)
+   Reasoning: The `park_vehicle` method loops through all parked vehicles (up to N elements) to ensure no duplicate license plates exist before appending the new vehicle. Appending to the SimpleList takes O(1) time on average, making the overall time complexity O(N).
+
+2. Remove (remove_vehicle): O(N)
+   Reasoning: The `remove_vehicle` method searches for the vehicle by its license plate using a linear search taking O(N) time. Once found, it calls the `remove()` method on the SimpleList, which also operates in O(N) time due to shifting elements. The combined time is O(N).
+
+3. Search (search_vehicle): O(N)
+   Reasoning: The `search_vehicle` method implements a linear search. It iterates through the list of vehicles examining each element one by one to find the matching license plate. In the worst-case scenario, it must check all N elements, making it O(N).
+
+4. Sort (sort_by_entry_time): O(N log N)
+   Reasoning: The `sort_by_entry_time` method utilizes Python's built-in `list.sort()`, which is implemented using the Timsort algorithm. Timsort is a highly optimized sorting algorithm that runs in O(N log N) time in the worst and average cases.
+
+
+List Structure Choice
+=====================
+
+The List structure (encapsulated in the `SimpleList` class) was an appropriate choice for this project for several reasons:
+- Dynamic: Python lists dynamically resize as needed, making it easy to accommodate a variable number of vehicles up to the parking lot's capacity without manual memory management.
+- Simple: The List provides an intuitive and simple way to store items in sequence and retrieve them.
+- Efficient enough for small sets: Since this project represents a typical parking lot (which has a relatively small capacity, e.g., 10 spaces as per default), the O(N) operations (search, remove) are negligible in terms of performance impact, making the List both practical and straightforward for this context.
