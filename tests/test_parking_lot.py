@@ -64,6 +64,48 @@ class TestParkingLot(unittest.TestCase):
         self.assertFalse(success)
         self.assertEqual(self.lot.check_availability(), 1)
 
+    def test_search_vehicle_success(self):
+        """Verify searching for an existing vehicle returns the vehicle."""
+        self.lot.park_vehicle(self.v1)
+        self.lot.park_vehicle(self.v2)
+        found = self.lot.search_vehicle("XYZ-789")
+        self.assertEqual(found, self.v2)
+
+    def test_search_vehicle_not_found(self):
+        """Verify searching for a non-existent vehicle returns None."""
+        self.lot.park_vehicle(self.v1)
+        found = self.lot.search_vehicle("NON-EXISTENT")
+        self.assertIsNone(found)
+
+    def test_sort_by_entry_time(self):
+        """Verify sorting vehicles by entry time."""
+        # Create vehicles with specific entry times to test sorting
+        now = datetime.datetime.now()
+        v_early = Vehicle("EARLY", "Alice", now - datetime.timedelta(hours=2))
+        v_late = Vehicle("LATE", "Bob", now)
+        v_mid = Vehicle("MID", "Charlie", now - datetime.timedelta(hours=1))
+
+        self.lot = ParkingLot(capacity=5)
+        # Park in random order
+        self.lot.park_vehicle(v_late)
+        self.lot.park_vehicle(v_early)
+        self.lot.park_vehicle(v_mid)
+
+        # Before sort
+        vehicles = self.lot._vehicles.get_all()
+        self.assertEqual(vehicles[0].get_license_plate(), "LATE")
+        self.assertEqual(vehicles[1].get_license_plate(), "EARLY")
+        self.assertEqual(vehicles[2].get_license_plate(), "MID")
+
+        # Sort
+        self.lot.sort_by_entry_time()
+
+        # After sort
+        vehicles = self.lot._vehicles.get_all()
+        self.assertEqual(vehicles[0].get_license_plate(), "EARLY")
+        self.assertEqual(vehicles[1].get_license_plate(), "MID")
+        self.assertEqual(vehicles[2].get_license_plate(), "LATE")
+
     def test_check_availability(self):
         """Verify check_availability handles empty, partial, and full lots."""
         # Empty lot

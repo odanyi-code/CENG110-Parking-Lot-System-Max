@@ -54,6 +54,34 @@ class ParkingLot:
         print(f"Vehicle {license_plate} not found in the parking lot.")
         return False
 
+    def search_vehicle(self, license_plate: str) -> Vehicle | None:
+        """
+        Search for a vehicle by license plate.
+        """
+        for v in self._vehicles.get_all():
+            if v.get_license_plate() == license_plate:
+                return v
+
+        print("Vehicle not found.")
+        return None
+
+    def sort_by_entry_time(self):
+        """
+        Sorts the parked vehicles by their entry time.
+        """
+        vehicles = self._vehicles.get_all()
+
+        print(f"Before sorting: {[v.get_license_plate() for v in vehicles]}")
+
+        vehicles.sort(key=lambda v: v.get_entry_time())
+
+        # Rebuild the internal list
+        self._vehicles = SimpleList()
+        for v in vehicles:
+            self._vehicles.add(v)
+
+        print(f"After sorting: {[v.get_license_plate() for v in self._vehicles.get_all()]}")
+
     def check_availability(self) -> int:
         """
         Returns the number of free spots and prints status messages.
