@@ -28,6 +28,10 @@ class ParkingLot:
         """
         Parks a vehicle if the lot is not full and it's not a duplicate.
         """
+        if not isinstance(vehicle, Vehicle):
+            print("Invalid input: Only Vehicle instances can be parked.")
+            return False
+
         if self.is_full():
             print(f"Parking lot is full. Cannot park vehicle {vehicle.get_license_plate()}.")
             return False
