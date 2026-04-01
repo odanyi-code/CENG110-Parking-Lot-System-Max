@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C++
+*.o
+*.obj
+*.out
+*.app
+*.exe
+*.dll
+*.dylib
+*.a
+*.lib
+
+# IDEs/OS
+.vscode/
+.idea/
+.DS_Store
