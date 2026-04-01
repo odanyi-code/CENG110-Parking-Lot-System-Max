@@ -75,8 +75,6 @@ class ParkingLot:
         """
         vehicles = self._vehicles.get_all()
 
-        print(f"Before sorting: {[v.get_license_plate() for v in vehicles]}")
-
         vehicles.sort(key=lambda v: v.get_entry_time())
 
         # Rebuild the internal list
@@ -84,7 +82,11 @@ class ParkingLot:
         for v in vehicles:
             self._vehicles.add(v)
 
-        print(f"After sorting: {[v.get_license_plate() for v in self._vehicles.get_all()]}")
+    def get_parked_vehicles(self):
+        """
+        Returns a shallow copy of the list of parked vehicles.
+        """
+        return self._vehicles.get_all()
 
     def check_availability(self) -> int:
         """
